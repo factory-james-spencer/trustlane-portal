@@ -10,8 +10,8 @@ export interface ProgramFees {
 
 export const FEE_SCHEDULE: {
   programs: Record<Program, ProgramFees>;
-  /** Surcharge rates in basis points of the base fee. */
-  surchargeBps: Record<Surcharge, number>;
+  /** Surcharge rates as a fraction of the base fee. */
+  surchargeRates: Record<Surcharge, number>;
 } = {
   programs: {
     air: {
@@ -27,5 +27,5 @@ export const FEE_SCHEDULE: {
       baseCents: { application: 5000, renewal: 5000, replacement: 2500 },
     },
   },
-  surchargeBps: { expedite: 1500, late: 1000 },
+  surchargeRates: { expedite: 0.15, late: 0.1 },
 };

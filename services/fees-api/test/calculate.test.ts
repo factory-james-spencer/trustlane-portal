@@ -4,12 +4,12 @@ import { calculateFee, UnknownFeeError } from '../src/calculate.ts';
 
 test('TrustLane Air renewal fee', () => {
   const quote = calculateFee({ program: 'air', feeType: 'renewal' });
-  assert.equal(quote.totalCents, 12000);
+  assert.equal(quote.total, 120);
 });
 
 test('TrustLane Commercial application fee', () => {
   const quote = calculateFee({ program: 'commercial', feeType: 'application' });
-  assert.equal(quote.totalCents, 5000);
+  assert.equal(quote.total, 50);
 });
 
 test('unknown fee type is rejected', () => {

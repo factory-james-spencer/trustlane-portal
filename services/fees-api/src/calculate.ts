@@ -6,13 +6,19 @@ export interface FeeRequest {
   surcharges?: Surcharge[];
 }
 
+export interface LineItem {
+  description: string;
+  /** US dollars. */
+  amount: number;
+}
+
 export interface FeeQuote {
   program: Program;
   feeType: FeeType;
   surcharges: Surcharge[];
-  baseCents: number;
-  surchargeCents: number;
-  totalCents: number;
+  lineItems: LineItem[];
+  /** US dollars. */
+  total: number;
 }
 
 export class UnknownFeeError extends Error {
@@ -30,19 +36,19 @@ export function calculateFee(request: FeeRequest): FeeQuote {
   }
 
   const surcharges = [...new Set(request.surcharges ?? [])];
-  // Each surcharge is a share of the base fee (not compounded), rounded to the cent,
-  // as published in the fee notice.
-  let surchargeCents = 0;
+  const lineItems: LineItem[] = [{ description: `${programFees.label} ${request.feeType}`, amount: baseCents / 100 }];
+  let rate = 0;
   for (const surcharge of surcharges) {
-    surchargeCents += Math.round((baseCents * FEE_SCHEDULE.surchargeBps[surcharge]) / 10_000);
+    const surchargeRate = FEE_SCHEDULE.surchargeRates[surcharge];
+    lineItems.push({ description: `${surcharge} surcharge`, amount: (baseCents * surchargeRate) / 100 });
+    rate += surchargeRate;
   }
 
   return {
     program: request.program,
     feeType: request.feeType,
     surcharges,
-    baseCents,
-    surchargeCents,
-    totalCents: baseCents + surchargeCents,
+    lineItems,
+    total: (baseCents * (1 + rate)) / 100,
   };
 }
