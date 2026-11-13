@@ -38,7 +38,7 @@ export function buildPaymentRequest(applicationId: string, quote: FeeQuote): Pay
   return {
     agencyCode: FEDCOLLECT_AGENCY_CODE,
     referenceId: `${applicationId}-${quote.feeType}`,
-    amount: String(quote.total),
+    amount: quote.total.toFixed(2),
     currency: 'USD',
     description: `${FEE_SCHEDULE.programs[quote.program].label} ${quote.feeType}`,
   };

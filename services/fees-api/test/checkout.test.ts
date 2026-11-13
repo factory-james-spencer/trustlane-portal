@@ -18,3 +18,17 @@ test('submits one payment and returns the confirmation', async () => {
   assert.equal(result.confirmationId, 'FC-20931');
   assert.equal(result.status, 'settled');
 });
+
+test('expedited checkout submits an amount accepted by FedCollect', async () => {
+  const result = await checkout(
+    { applicationId: 'APP-REGRESSION', program: 'air', feeType: 'renewal', surcharges: ['expedite'] },
+    async (payment) => {
+      assert.equal(payment.amount, '138.00');
+      assert.match(payment.amount, /^\d+\.\d{2}$/);
+      return { confirmationId: 'FC-REGRESSION', status: 'settled' };
+    },
+  );
+
+  assert.equal(result.amount, '138.00');
+  assert.equal(result.status, 'settled');
+});
