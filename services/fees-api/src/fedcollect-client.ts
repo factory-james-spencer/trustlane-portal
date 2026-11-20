@@ -34,18 +34,11 @@ export class FedCollectValidationError extends Error {
   }
 }
 
-// FedCollect rejects amounts with more than two decimal places (HTTP 422 invalid_amount).
-function formatCents(cents: number): string {
-  const dollars = Math.trunc(cents / 100);
-  const remainder = String(cents % 100).padStart(2, '0');
-  return `${dollars}.${remainder}`;
-}
-
 export function buildPaymentRequest(applicationId: string, quote: FeeQuote): PaymentRequest {
   return {
     agencyCode: FEDCOLLECT_AGENCY_CODE,
     referenceId: `${applicationId}-${quote.feeType}`,
-    amount: formatCents(quote.totalCents),
+    amount: String(quote.total),
     currency: 'USD',
     description: `${FEE_SCHEDULE.programs[quote.program].label} ${quote.feeType}`,
   };
