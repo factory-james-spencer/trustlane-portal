@@ -1,0 +1,55 @@
+name: Incident
+description: Report a production incident grouped from one or more alerts.
+title: "[Incident] "
+labels: ["incident"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What is broken, for whom, since when.
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - sev-1
+        - sev-2
+        - sev-3
+        - sev-4
+    validations:
+      required: true
+  - type: textarea
+    id: alerts
+    attributes:
+      label: Grouped alert ids
+      description: One alert id per line. Later duplicates are added as comments.
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact
+      description: Affected services, user journeys, and error rates.
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Metrics, logs, traces, deploys, and infrastructure events with timestamps.
+  - type: textarea
+    id: cause
+    attributes:
+      label: Suspected cause
+  - type: input
+    id: owner
+    attributes:
+      label: Owner team
+      description: From ownership.yaml, for example portal-app.
+    validations:
+      required: true
+  - type: textarea
+    id: next-steps
+    attributes:
+      label: Next steps

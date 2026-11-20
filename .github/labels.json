@@ -1,0 +1,14 @@
+[
+  { "name": "incident", "color": "b60205", "description": "Production incident" },
+  { "name": "noise", "color": "c5def5", "description": "Alert noise; monitor needs tuning" },
+  { "name": "duplicate", "color": "cfd3d7", "description": "Duplicate of an existing issue or incident" },
+  { "name": "sev-1", "color": "d93f0b", "description": "Severity 1: critical user impact" },
+  { "name": "sev-2", "color": "e99695", "description": "Severity 2: major user impact" },
+  { "name": "sev-3", "color": "fbca04", "description": "Severity 3: minor user impact" },
+  { "name": "sev-4", "color": "fef2c0", "description": "Severity 4: no user impact" },
+  { "name": "team:portal-app", "color": "1d76db", "description": "Owned by the portal-app team" },
+  { "name": "team:platform-db", "color": "5319e7", "description": "Owned by the platform-db team" },
+  { "name": "team:identity", "color": "0e8a16", "description": "Owned by the identity team" },
+  { "name": "team:payments-integration", "color": "006b75", "description": "Owned by the payments-integration team" },
+  { "name": "team:observability", "color": "bfd4f2", "description": "Owned by the observability team" }
+]

@@ -1,0 +1,54 @@
+# Who owns what. Use this to route incidents, issues, and pull requests.
+teams:
+  portal-app:
+    label: "team:portal-app"
+    description: Portal application team (web front end, renewals, status, fees).
+  identity:
+    label: "team:identity"
+    description: Sign-in, identity-gateway, and the relationship with the external sign-in provider.
+  platform-db:
+    label: "team:platform-db"
+    description: Shared PostgreSQL platform (portal-db), failover, and connection limits.
+  payments-integration:
+    label: "team:payments-integration"
+    description: Integration with the FedCollect shared payment service. Owns FedCollect outages, not request formatting in fees-api.
+  observability:
+    label: "team:observability"
+    description: Monitor definitions, thresholds, and alert tuning. Route noisy or flapping monitors here.
+
+services:
+  portal-web:
+    team: portal-app
+    path: services/portal-web/
+  renewals-api:
+    team: portal-app
+    path: services/renewals-api/
+  status-api:
+    team: portal-app
+    path: services/status-api/
+  fees-api:
+    team: portal-app
+    path: services/fees-api/
+  identity-gateway:
+    team: identity
+    path: services/identity-gateway/
+  renewals-batch:
+    team: portal-app
+    path: services/renewals-batch/
+
+external:
+  fedcollect:
+    team: payments-integration
+    description: Shared federal payment collection service called by fees-api.
+  sign-in-provider:
+    team: identity
+    description: External identity provider called by identity-gateway.
+
+infrastructure:
+  portal-db:
+    team: platform-db
+    description: PostgreSQL primary portal-db-1 and replica portal-db-2.
+    hosts: [portal-db-1, portal-db-2]
+
+monitoring:
+  team: observability
